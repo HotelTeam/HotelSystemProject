@@ -5,6 +5,8 @@ import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 public class AvailableRoomsFrame extends JFrame implements ActionListener{
 
@@ -26,6 +32,9 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 	private JTextField arrivalField, departureField;
 	private JButton pickDateButton,selectRoomButton,backButton;
 	private List roomsList;
+	
+	private PreparedStatement preparedStatement = null;
+	private Connection con;
 	
 	public AvailableRoomsFrame(){
 				
@@ -65,10 +74,8 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 		northPanel.add(departureField);
 		northPanel.add(pickDateButton);
 
-		roomsList.add("Room 1             Single");
-		roomsList.add("Room 2             Double");
-		roomsList.add("Room 3             Double Bed");
-		roomsList.add("Room 4             Suite");
+		addRoomsToList();
+		
 		centerPanel.setLayout(new BorderLayout());
 		centerPanel.add(roomsList,BorderLayout.CENTER);
 		
@@ -90,6 +97,32 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
+	}
+	
+	private void addRoomsToList(){
+		String query = "SELECT r.id_room, b.number, r.price, r.offer FROM rooms r LEFT JOIN simpleroom s ON r.id_room = s.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String url = "jdbc:mysql://localhost/hotel_db";
+			String username = "root";
+			String password = "";
+			con = (Connection) DriverManager.getConnection(url, username, password);
+			Statement st = (Statement) con.createStatement();
+			
+			ResultSet rs = st.executeQuery(query);
+			
+			 while (rs.next()) {
+				 
+				 roomsList.add("Room" + rs.getString("id_room") + "    number of beds:" + rs.getInt("number") + "    price:" + rs.getInt("price") + "    offer:" + rs.getDouble("offer"));
+				 
+			 }
+			
+		} catch(Exception e) {
+			roomsList.add("Error conecting to database");
+			System.out.println(e);
+		}
 	}
 
 	@Override

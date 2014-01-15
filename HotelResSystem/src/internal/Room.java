@@ -1,7 +1,47 @@
 package internal;
 
-public class Room {
+public abstract class Room {
 
+	protected int id_room;
+	protected int number;
+	protected int price;
+	protected double offer;
+	
+	public Room(){
+		
+	}
+
+	public int getId_room() {
+		return id_room;
+	}
+
+	public void setId_room(int id_room) {
+		this.id_room = id_room;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public double getOffer() {
+		return offer;
+	}
+
+	public void setOffer(double offer) {
+		this.offer = offer;
+	}
 	
 
 }

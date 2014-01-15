@@ -119,7 +119,7 @@ public class ValidationFormFrame extends JFrame implements ActionListener{
 			}else if(!matcher.matches()){
 				JOptionPane.showMessageDialog(null, "Please type a valid e-mail address", "Wait",JOptionPane.INFORMATION_MESSAGE);
 			}else{
-				Client client = new Client(1);
+				Client client = new Client();
 				client.setFirstname(firstNameField.getText());
 				client.setLastname(lastNameField.getText());
 				client.setAge(Integer.parseInt(ageField.getText()));
@@ -128,8 +128,14 @@ public class ValidationFormFrame extends JFrame implements ActionListener{
 				client.setPassword(passwordField.getPassword());
 				client.setCreditCard(creditCardField.getText());
 				
-				JOptionPane.showMessageDialog(null, "Mr/Ms " + client.getFirstname() + " " + client.getLastname() + " your room has successfully been reserved.", "Success",JOptionPane.INFORMATION_MESSAGE);
-				this.dispose();
+				client.addClientToDB();
+				
+				if(client.getClientAddedDB()){
+					JOptionPane.showMessageDialog(null, "Mr/Ms " + client.getFirstname() + " " + client.getLastname() + " your room has successfully been reserved.", "Success",JOptionPane.INFORMATION_MESSAGE);
+					this.dispose();
+				}else{
+					JOptionPane.showMessageDialog(null, "Mr/Ms " + client.getFirstname() + " " + client.getLastname() + " there has been an error while trying to connect to DataBase", "Error",JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		}else if (e.getSource() == cancelButton){
 			this.dispose();
@@ -146,4 +152,6 @@ public class ValidationFormFrame extends JFrame implements ActionListener{
 	    }
 	    return formatter;
 	}
+	
+	
 }
