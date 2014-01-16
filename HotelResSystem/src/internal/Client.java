@@ -1,6 +1,7 @@
 package internal;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -22,14 +23,6 @@ public class Client {
 
 	public Client(){
 		clientAddedDB = false;
-	}
-
-	public int getId_client() {
-		return id_client;
-	}
-
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
 	}
 
 	public String getUsername() {
@@ -89,6 +82,30 @@ public class Client {
 		this.creditCard = creditCard;
 	}
 	
+	
+	
+	public int getIdClient(){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			String url = "jdbc:mysql://localhost/hotel_db";
+			String username = "root";
+			String password = "";
+			con = (Connection) DriverManager.getConnection(url, username, password);
+			
+			Statement st = (Statement) con.createStatement();
+			
+			String query = "SELECT id_client FROM client";
+			ResultSet rs = st.executeQuery(query);
+
+			this.id_client = rs.getInt("id_client");
+			return id_client;
+			
+		} catch(Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
 	public void addClientToDB(){
 
 		try {

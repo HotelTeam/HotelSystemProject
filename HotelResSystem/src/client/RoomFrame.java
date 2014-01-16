@@ -1,5 +1,7 @@
 package client;
 
+import internal.Room;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.List;
@@ -27,7 +29,7 @@ public class RoomFrame extends JFrame implements ActionListener{
 	private JTextArea priceArea;
 	private JButton reservationButton,backButton;
 	
-	public RoomFrame(){
+	public RoomFrame(Room room){
 
 		masterPanel = new JPanel(new BorderLayout());
 		northPanel = new JPanel();
@@ -36,7 +38,7 @@ public class RoomFrame extends JFrame implements ActionListener{
 		southPanel = new JPanel();
 		westPanel = new JPanel();
 				
-		titleText = new JLabel("Room 1");
+		titleText = new JLabel(""+room.getId_room());
 		facilitiesList = new List();
 		image = new ImageIcon("images/single.jpg");
 		roomImageLabel = new JLabel(image);

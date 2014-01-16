@@ -6,6 +6,7 @@ public abstract class Room {
 	protected int number;
 	protected int price;
 	protected double offer;
+	protected int numberBeds;
 	
 	public Room(){
 		
@@ -42,6 +43,15 @@ public abstract class Room {
 	public void setOffer(double offer) {
 		this.offer = offer;
 	}
+
+	public int getNumberBeds() {
+		return numberBeds;
+	}
+
+	public void setNumberBeds(int numberBeds) {
+		this.numberBeds = numberBeds;
+	}
+	
 	
 
 }

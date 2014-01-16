@@ -1,13 +1,12 @@
 package client;
 
-
 public class main {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RoomFrame fr = new RoomFrame();
+		AvailableRoomsFrame rf = new AvailableRoomsFrame();
 	}
 
 }
