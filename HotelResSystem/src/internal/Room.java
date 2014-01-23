@@ -4,7 +4,7 @@ public abstract class Room {
 
 	protected int id_room;
 	protected int number;
-	protected int price;
+	protected double price;
 	protected double offer;
 	
 	public Room(){
@@ -27,11 +27,11 @@ public abstract class Room {
 		this.number = number;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

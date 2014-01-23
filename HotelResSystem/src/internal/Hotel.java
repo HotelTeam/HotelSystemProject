@@ -12,43 +12,33 @@ import com.mysql.jdbc.Statement;
 public class Hotel {
 	private Vector<Room> rooms;
 	private Vector<Reservation> reservations;
-	private String driver ="com.mysql.jdbc.Driver";
+	private String driver = "com.mysql.jdbc.Driver";
 	private final String url;
-	private final String username ;
-	private final String password ;
+	private final String username;
+	private final String password;
 	private Connection con;
 	private ResultSet rs;
 	private Statement st;
 	private PreparedStatement pst;
+
 	public Hotel() {
-		 driver ="com.mysql.jdbc.Driver";
-		 url = "jdbc:mysql://localhost/hotel_db";
-		 username = "root";
-		 password = "zaq123!@#";
-			
-	}	
-	public void modifyRooom(Room room) {
-		try {
-			Class.forName(driver);
-			con =  (Connection) DriverManager.getConnection(url,username, password);
-			st = (Statement) con.createStatement();
-			rs = st.executeQuery("");
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		driver = "com.mysql.jdbc.Driver";
+		url = "jdbc:mysql://localhost/hotel_db";
+		username = "root";
+		password = "zaq123!@#";
 
 	}
 
 	public void deleteRoom(Room room) {
-		String deleteRoom="DELETE FROM rooms WHERE id_room =?";
+		String deleteRoom = "DELETE FROM rooms WHERE id_room =?";
 		try {
 			Class.forName(driver);
-			con =  (Connection) DriverManager.getConnection(url,username, password);
-			con.setAutoCommit(false);			
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+			con.setAutoCommit(false);
 			pst = (PreparedStatement) con.prepareStatement(deleteRoom);
 			pst.setInt(1, room.getId_room());
-			pst.execute();			
+			pst.execute();
 			con.commit();
 			pst.close();
 			con.close();
@@ -59,77 +49,81 @@ public class Hotel {
 
 	public void createSimpleRoom(Simple room) {
 		String insertRoom = "INSERT INTO rooms(number,price,offer)VALUES (?,?,?)";
-		String selectRoom="SELECT id_room FROM rooms WHERE number="+room.getNumber()+"";
-		String insertSimple="INSERT INTO simpleRoom (id_room, id_bed, air_con, multimedia, wi_fi, tv, refrigerator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String selectRoom = "SELECT id_room FROM rooms WHERE number="
+				+ room.getNumber() + "";
+		String insertSimple = "INSERT INTO simpleRoom (id_room, id_bed, air_con, multimedia, wi_fi, tv, refrigerator) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			Class.forName(driver);
-			con =  (Connection) DriverManager.getConnection(url,username, password);
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
 			con.setAutoCommit(false);
 			pst = (PreparedStatement) con.prepareStatement(insertRoom);
 			pst.setInt(1, room.getNumber());
-			pst.setInt(2, room.getPrice());
+			pst.setDouble(2, room.getPrice());
 			pst.setDouble(3, room.getOffer());
 			pst.execute();
-			st= (Statement) con.createStatement();
+			st = (Statement) con.createStatement();
 			rs = st.executeQuery(selectRoom);
-			int id_room=-1;
-			if(rs.next()){
-			id_room = rs.getInt("id_room");
+			int id_room = -1;
+			if (rs.next()) {
+				id_room = rs.getInt("id_room");
 			}
-			pst =(PreparedStatement) con.prepareStatement(insertSimple);
+			pst = (PreparedStatement) con.prepareStatement(insertSimple);
 			pst.setInt(1, id_room);
-			pst.setInt(2,room.getNumberOfBeds());
-			pst.setBoolean(3,room.getAir_con());
-			pst.setBoolean(4,room.getMultimedia());
-			pst.setBoolean(5,room.getWi_fi());
-			pst.setBoolean(6,room.getTv());
-			pst.setBoolean(7,room.getRefrigerator());
+			pst.setInt(2, room.getNumberOfBeds());
+			pst.setBoolean(3, room.getAir_con());
+			pst.setBoolean(4, room.getMultimedia());
+			pst.setBoolean(5, room.getWi_fi());
+			pst.setBoolean(6, room.getTv());
+			pst.setBoolean(7, room.getRefrigerator());
 			pst.execute();
 			con.commit();
 			rs.close();
 			st.close();
 			pst.close();
 			con.close();
-			
+
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
+
 	public void createSuiteRoom(Suite room) {
 		String insertRoom = "INSERT INTO rooms(number,price,offer)VALUES (?,?,?)";
-		String selectRoom="SELECT id_room FROM rooms WHERE number="+room.getNumber()+"";
-		String insertSimple="INSERT INTO simpleRoom (id_room, id_bed, air_con, multimedia, wi_fi, tv, refrigerator) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		String insertSuite="INSERT INTO suiteRoom (id_room,jacuzzi,breakfast,meal,dinner) VALUES (?,?, ?, ?, ?);";
+		String selectRoom = "SELECT id_room FROM rooms WHERE number="
+				+ room.getNumber() + "";
+		String insertSimple = "INSERT INTO simpleRoom (id_room, id_bed, air_con, multimedia, wi_fi, tv, refrigerator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insertSuite = "INSERT INTO suiteRoom (id_room,jacuzzi,breakfast,meal,dinner) VALUES (?,?, ?, ?, ?);";
 		try {
 			Class.forName(driver);
-			con =  (Connection) DriverManager.getConnection(url,username, password);
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
 			con.setAutoCommit(false);
 			pst = (PreparedStatement) con.prepareStatement(insertRoom);
 			pst.setInt(1, room.getNumber());
-			pst.setInt(2, room.getPrice());
+			pst.setDouble(2, room.getPrice());
 			pst.setDouble(3, room.getOffer());
 			pst.execute();
 			pst.close();
-			st= (Statement) con.createStatement();
+			st = (Statement) con.createStatement();
 			rs = st.executeQuery(selectRoom);
-			int id_room=-1;
-			if(rs.next()){
-			id_room = rs.getInt("id_room");
+			int id_room = -1;
+			if (rs.next()) {
+				id_room = rs.getInt("id_room");
 			}
-			pst =(PreparedStatement) con.prepareStatement(insertSimple);
+			pst = (PreparedStatement) con.prepareStatement(insertSimple);
 			pst.setInt(1, id_room);
-			pst.setInt(2,room.getNumberOfBeds());
-			pst.setBoolean(3,room.getAir_con());
-			pst.setBoolean(4,room.getMultimedia());
-			pst.setBoolean(5,room.getWi_fi());
-			pst.setBoolean(6,room.getTv());
-			pst.setBoolean(7,room.getRefrigerator());
+			pst.setInt(2, room.getNumberOfBeds());
+			pst.setBoolean(3, room.getAir_con());
+			pst.setBoolean(4, room.getMultimedia());
+			pst.setBoolean(5, room.getWi_fi());
+			pst.setBoolean(6, room.getTv());
+			pst.setBoolean(7, room.getRefrigerator());
 			pst.execute();
 			pst.close();
-			pst=(PreparedStatement)con.prepareStatement(insertSuite);
+			pst = (PreparedStatement) con.prepareStatement(insertSuite);
 			pst.setInt(1, id_room);
 			pst.setBoolean(2, room.getJacuzzi());
 			pst.setBoolean(3, room.getBreakfast());
@@ -141,28 +135,129 @@ public class Hotel {
 			st.close();
 			pst.close();
 			con.close();
-			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	
-	
-	public void setOffer(double offer) {
 
+	public void setOffer(double offer, Room room) {
+		String setOffer = "UPDATE rooms SET offer=? WHERE id_room =?";
+		try {
+			Class.forName(driver);
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+			con.setAutoCommit(false);
+			pst = (PreparedStatement) con.prepareStatement(setOffer);
+			pst.setDouble(1, offer);
+			pst.setInt(2, room.getId_room());
+			pst.execute();
+			con.commit();
+			pst.close();
+			con.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public Vector<Reservation> getReservations() {
+		reservations = new Vector<Reservation>();
+		Reservation res;
+		String selectReservation="SELECT *FROM reservation";
+		try {
+			Class.forName(driver);
+			con = (Connection) DriverManager.getConnection(url, username,password);
+			st =(Statement) con.createStatement();
+			rs = st.executeQuery(selectReservation);
+			while (rs.next()) {
+				
+			
+				
+			}
+			con.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return reservations;
 	}
 
 	public Vector<Room> getRooms() {
 		rooms = new Vector<Room>();
+		Simple simpleRoom;
+		Suite suiteRoom;
+		String selectRoom = "SELECT * FROM rooms";
+		String selectSimple = "SELECT *FROM simpleRoom WHERE id_room=?";
+		String selectSuite = "SELECT * FROM suiteRoom WHERE id_room=?";
+		PreparedStatement pst1;
+		PreparedStatement pst2;
+		ResultSet rs1;
+		ResultSet rs2;
+		try {
+			Class.forName(driver);
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+			st = (Statement) con.createStatement();
+			rs = st.executeQuery(selectRoom);
+			while (rs.next()) {
+				pst1 = (PreparedStatement) con.prepareStatement(selectSimple);
+				pst1.setInt(1, rs.getInt("id_room"));
+				rs1 = pst1.executeQuery();
+				pst2 = (PreparedStatement) con.prepareStatement(selectSuite);
+				pst2.setInt(1, rs.getInt("id_room"));
+				rs2 = pst2.executeQuery();
+				if (rs2.next()) {
+					suiteRoom = new Suite();
+					suiteRoom.setId_room(rs2.getInt("id_room"));
+					suiteRoom.setJacuzzi(rs2.getBoolean("jacuzzi"));
+					suiteRoom.setBreakfast(rs2.getBoolean("breakfast"));
+					suiteRoom.setDinner(rs2.getBoolean("dinner"));
+					suiteRoom.setMeal(rs2.getBoolean("meal"));
+					if (rs1.next()) {
+						suiteRoom.setAir_con(rs1.getBoolean("air_con"));
+						suiteRoom.setMultimedia(rs1.getBoolean("multimedia"));
+						suiteRoom.setNumberOfBeds(rs1.getInt("id_bed"));
+						suiteRoom.setRefrigerator(rs1
+								.getBoolean("refrigerator"));
+						suiteRoom.setWi_fi(rs1.getBoolean("wi_fi"));
+						suiteRoom.setTv(rs1.getBoolean("tv"));
+					}
+					suiteRoom.setPrice(rs.getDouble("price"));
+					suiteRoom.setOffer(rs.getDouble("offer"));
+					suiteRoom.setNumber(rs.getInt("number"));
+					rooms.add(suiteRoom);
+				} else {
+					simpleRoom = new Simple();
+					if (rs1.next()) {
+						simpleRoom.setId_room(rs1.getInt("id_room"));
+						simpleRoom.setAir_con(rs1.getBoolean("air_con"));
+						simpleRoom.setMultimedia(rs1.getBoolean("multimedia"));
+						simpleRoom.setNumberOfBeds(rs1.getInt("id_bed"));
+						simpleRoom.setRefrigerator(rs1
+								.getBoolean("refrigerator"));
+						simpleRoom.setWi_fi(rs1.getBoolean("wi_fi"));
+						simpleRoom.setTv(rs1.getBoolean("tv"));
+					}
+					simpleRoom.setPrice(rs.getDouble("price"));
+					simpleRoom.setOffer(rs.getDouble("offer"));
+					simpleRoom.setNumber(rs.getInt("number"));
+					rooms.add(simpleRoom);
+				}
+				rs1.close();
+				rs2.close();
+				pst1.close();
+				pst2.close();
+			}
+			rs.close();
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 
 		return rooms;
 	}
-
 
 }
