@@ -1,45 +1,45 @@
 package internal;
 
-public class Suite extends Room {
+public class Suite extends Simple{
 
-	private int jacuzzi;
-	private int breakfast;
-	private int meal;
-	private int dinner;
+	private boolean jacuzzi;
+	private boolean breakfast;
+	private boolean meal;
+	private boolean dinner;
 	
 	public Suite(){
 		super();
 	}
 
-	public int getJacuzzi() {
+	public boolean getJacuzzi() {
 		return jacuzzi;
 	}
 
-	public void setJacuzzi(int jacuzzi) {
+	public void setJacuzzi(boolean jacuzzi) {
 		this.jacuzzi = jacuzzi;
 	}
 
-	public int getBreakfast() {
+	public boolean getBreakfast() {
 		return breakfast;
 	}
 
-	public void setBreakfast(int breakfast) {
+	public void setBreakfast(boolean breakfast) {
 		this.breakfast = breakfast;
 	}
 
-	public int getMeal() {
+	public boolean getMeal() {
 		return meal;
 	}
 
-	public void setMeal(int meal) {
+	public void setMeal(boolean meal) {
 		this.meal = meal;
 	}
 
-	public int getDinner() {
+	public boolean getDinner() {
 		return dinner;
 	}
 
-	public void setDinner(int dinner) {
+	public void setDinner(boolean dinner) {
 		this.dinner = dinner;
 	}
 	

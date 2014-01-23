@@ -2,63 +2,62 @@ package internal;
 
 public class Simple extends Room {
 
-	protected int id_bed;
-	protected int air_con;
-	protected int multimedia;
-	protected int wi_fi;
-	protected int tv;
-	protected int refrigerator;
+	private int numberOfBeds;
+	private boolean air_con;
+	private boolean multimedia;
+	private boolean wi_fi;
+	private boolean tv;
+	private boolean refrigerator;
 	
 	
 	public Simple() {
 		super();
 	}
 
-	public int getId_bed() {
-		return id_bed;
+	public int getNumberOfBeds() {
+		return numberOfBeds;
+	}
+	public void setNumberOfBeds(int numberOfBeds) {
+		this.numberOfBeds = numberOfBeds;
 	}
 
-	public void setId_bed(int id_bed) {
-		this.id_bed = id_bed;
-	}
-
-	public int getAir_con() {
+	public boolean getAir_con() {
 		return air_con;
 	}
 
-	public void setAir_con(int air_con) {
+	public void setAir_con(boolean air_con) {
 		this.air_con = air_con;
 	}
 
-	public int getMultimedia() {
+	public boolean getMultimedia() {
 		return multimedia;
 	}
 
-	public void setMultimedia(int multimedia) {
+	public void setMultimedia(boolean multimedia) {
 		this.multimedia = multimedia;
 	}
 
-	public int getWi_fi() {
+	public boolean getWi_fi() {
 		return wi_fi;
 	}
 
-	public void setWi_fi(int wi_fi) {
+	public void setWi_fi(boolean wi_fi) {
 		this.wi_fi = wi_fi;
 	}
 
-	public int getTv() {
+	public boolean getTv() {
 		return tv;
 	}
 
-	public void setTv(int tv) {
+	public void setTv(boolean tv) {
 		this.tv = tv;
 	}
 
-	public int getRefrigerator() {
+	public boolean getRefrigerator() {
 		return refrigerator;
 	}
 
-	public void setRefrigerator(int refrigerator) {
+	public void setRefrigerator(boolean refrigerator) {
 		this.refrigerator = refrigerator;
 	}
 	

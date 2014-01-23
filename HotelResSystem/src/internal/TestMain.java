@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 public class TestMain {
@@ -14,33 +15,66 @@ public class TestMain {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+		String driver = "com.mysql.jdbc.Driver";
+		String url;
+		String username;
+		String password;
+		Connection con;
+		ResultSet rs;
+		Statement st;
+		PreparedStatement pst;
+		driver = "com.mysql.jdbc.Driver";
+		url = "jdbc:mysql://localhost/hotel_db";
+		username = "root";
+		password = "zaq123!@#";
+
+		String insertRoom = "INSERT INTO rooms(number,price,offer)VALUES (?,?,?)";
+		String selectRoom="SELECT id_room FROM rooms WHERE number=5";
+		String insertSimple="INSERT INTO simpleRoom (id_room, id_bed, air_con, multimedia, wi_fi, tv, refrigerator) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insertSuite="INSERT INTO suiteRoom (id_room,jacuzzi,breakfast,meal,dinner) VALUES (?,?, ?, ?, ?);";
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String query = "SELECT r.id_room, b.number, r.price, r.offer FROM rooms r LEFT JOIN simpleroom s ON r.id_room = s.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
-			String url = "jdbc:mysql://localhost/hotel_db";
-			String username = "root";
-			String password = "zaq123!@#";
-			Connection con =  (Connection) DriverManager.getConnection(url, username, password);
-			Statement st = (Statement) con.createStatement();
+			Class.forName(driver);
+			con =  (Connection) DriverManager.getConnection(url,username, password);
+			con.setAutoCommit(false);
+			pst = (PreparedStatement) con.prepareStatement(insertRoom);
+			pst.setInt(1, 5);
+			pst.setInt(2, 130);
+			pst.setDouble(3, 0.2);
+			pst.execute();
+			pst.close();
+			st= (Statement) con.createStatement();
+			rs = st.executeQuery(selectRoom);
+			int id_room=-1;
+			if(rs.next()){
+			id_room = rs.getInt("id_room");
+			}
+			pst =(PreparedStatement) con.prepareStatement(insertSimple);
+			pst.setInt(1, id_room);
+			pst.setInt(2,3);
+			pst.setBoolean(3,true);
+			pst.setBoolean(4,true);
+			pst.setBoolean(5,true);
+			pst.setBoolean(6,true);
+			pst.setBoolean(7,true);
+			pst.execute();
+			pst.close();
+			pst=(PreparedStatement)con.prepareStatement(insertSuite);
+			pst.setInt(1, id_room);
+			pst.setBoolean(2, true);
+			pst.setBoolean(3, true);
+			pst.setBoolean(4, true);
+			pst.setBoolean(5, true);
+			pst.execute();
+			con.commit();
+			rs.close();
+			st.close();
+			pst.close();
+			con.close();
 			
-			ResultSet rs = st.executeQuery(query);	
-			
-			
-			 while (rs.next()) {
-				 
-				System.out.println("Room" + rs.getString("id_room") + "    number of beds:" + rs.getInt("number") + "    price:" + rs.getInt("price") + "    offer:" + rs.getDouble("offer"));
-				 
-			 }
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 
 	}
 
