@@ -1,6 +1,6 @@
 package internal;
 
-public class Suite extends Simple {
+public class Suite extends Room {
 
 	private int jacuzzi;
 	private int breakfast;
