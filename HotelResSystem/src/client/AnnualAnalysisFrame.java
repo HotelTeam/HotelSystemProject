@@ -4,28 +4,31 @@
  * and open the template in the editor.
  */
 
-package internal;
+package client;
 
 import internal.db.Analysis;
+import internal.db.DBService;
 import internal.db.Year;
+
 import java.util.Collection;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 
 /**
  *
  * @author Bill
  */
-public class AnnualAnalysis extends javax.swing.JFrame {
+public class AnnualAnalysisFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form AnnualAnalysis
      */
-    public AnnualAnalysis() {
+    public AnnualAnalysisFrame() {
         
         initComponents();
         
-        List<Year> list  = service.getAllYars();
+        List<Year> list  = service.getAllYears();
         DefaultListModel model = new DefaultListModel();
         
         for(Year a : list) {
@@ -185,20 +188,20 @@ public class AnnualAnalysis extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AnnualAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnnualAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AnnualAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnnualAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AnnualAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnnualAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AnnualAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnnualAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AnnualAnalysis().setVisible(true);
+                new AnnualAnalysisFrame().setVisible(true);
             }
         });
     }

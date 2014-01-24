@@ -4,15 +4,10 @@
  * and open the template in the editor.
  */
 
-package internal;
+package internal.db;
 
-import internal.db.Analysis;
-import internal.db.AnalysisJpaController;
-import internal.db.Month;
-import internal.db.MonthJpaController;
-import internal.db.Year;
-import internal.db.YearJpaController;
 import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 
 /**
@@ -37,7 +32,7 @@ public class DBService {
         return controller.findAnalysisEntities();
     }
     
-    public List<Year> getAllYars() {
+    public List<Year> getAllYears() {
         YearJpaController con = new YearJpaController(emf);
         return con.findYearEntities();
     }

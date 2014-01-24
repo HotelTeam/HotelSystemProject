@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
-package internal;
+package client;
 
 import internal.db.Analysis;
+import internal.db.DBService;
+
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
@@ -15,15 +18,15 @@ import javax.swing.JList;
  *
  * @author Idrogios
  */
-public class MonthlyAnalysis extends javax.swing.JFrame {
+public class MonthlyAnalysisFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form MonthlyAnalysis
      */
-    public MonthlyAnalysis() {
+    public MonthlyAnalysisFrame() {
         initComponents();
         
-        addElementsToModel(annualList, service.getAllYars());
+        addElementsToModel(annualList, service.getAllYears());
         addElementsToModel(monthlyList, service.getAllMonths());
     }
     
@@ -59,24 +62,24 @@ public class MonthlyAnalysis extends javax.swing.JFrame {
         closeBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("?????????? ????????");
+        setTitle("Οικονομικά Στοιχεία");
 
         jScrollPane1.setViewportView(annualList);
 
-        jLabel1.setText("??????? ?????");
+        jLabel1.setText("Επιλογή Έτους");
 
         jScrollPane2.setViewportView(monthlyList);
 
-        jLabel2.setText("??????? ????");
+        jLabel2.setText("Επιλογή Μήνα");
 
-        showAnalysisBtn.setText("????????");
+        showAnalysisBtn.setText("Εμφάνιση");
         showAnalysisBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showAnalysisBtnActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("?????");
+        jLabel3.setText("Έσοδα");
 
         incomeTxtField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,9 +87,9 @@ public class MonthlyAnalysis extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("?????");
+        jLabel4.setText("Έξοδα");
 
-        closeBtn.setText("????????");
+        closeBtn.setText("Κλείσιμο");
         closeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 closeBtnActionPerformed(evt);
@@ -198,20 +201,20 @@ public class MonthlyAnalysis extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MonthlyAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonthlyAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MonthlyAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonthlyAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MonthlyAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonthlyAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MonthlyAnalysis.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MonthlyAnalysisFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MonthlyAnalysis().setVisible(true);
+                new MonthlyAnalysisFrame().setVisible(true);
             }
         });
     }

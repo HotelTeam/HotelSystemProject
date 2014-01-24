@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package internal;
+package client;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -39,11 +39,11 @@ public class ChooseAnalysisPanel extends javax.swing.JPanel {
         btnGroup.add(monthlyAnalysisChoice);
         btnGroup.add(anualAnalysisChoice);
 
-        monthlyAnalysisChoice.setText("??????? ???????");
+        monthlyAnalysisChoice.setText("Μηνιαία Ανάλυση");
 
-        anualAnalysisChoice.setText("?????? ???????");
+        anualAnalysisChoice.setText("Ετήσια Ανάλυση");
 
-        chooseBtn.setText("???????");
+        chooseBtn.setText("Επιλογή");
         chooseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chooseBtnActionPerformed(evt);
@@ -81,9 +81,9 @@ public class ChooseAnalysisPanel extends javax.swing.JPanel {
         JFrame frame;
         
         if(anualAnalysisChoice.isSelected()) {
-            frame = new AnnualAnalysis();
+            frame = new AnnualAnalysisFrame();
         } else {
-            frame = new MonthlyAnalysis();
+            frame = new MonthlyAnalysisFrame();
         }
         
         frame.setVisible(true);
