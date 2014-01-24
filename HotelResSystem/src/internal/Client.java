@@ -10,7 +10,7 @@ public class Client {
 
 	private int id_client;
 	private String username;
-	private char[] password;
+	private String password;
 	private int age;
 	private String email;
 	private String firstname;
@@ -45,7 +45,7 @@ public class Client {
 		return pass;
 	}
 
-	public void setPassword(char[] password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

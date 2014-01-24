@@ -127,7 +127,7 @@ public class ValidationFormFrame extends JFrame implements ActionListener{
 				client.setAge(Integer.parseInt(ageField.getText()));
 				client.setEmail(emailField.getText());
 				client.setUsername(usernameField.getText());
-				client.setPassword(passwordField.getPassword());
+				client.setPassword(String.copyValueOf(passwordField.getPassword()));
 				client.setCreditCard(creditCardField.getText());
 				
 				client.addClientToDB();
