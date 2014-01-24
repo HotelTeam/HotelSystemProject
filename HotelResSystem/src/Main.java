@@ -9,7 +9,8 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		RoomFrame fr = new RoomFrame();
+		MainFrame mf = new MainFrame();
+		mf.setVisible(true);
 	}
 
 }
