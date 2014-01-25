@@ -103,7 +103,8 @@ public class DeleteRoomFrame extends javax.swing.JFrame {
     }                                            
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+        new AdminBasicFrame().setVisible(true);
+        this.dispose();
     }                                            
 
     /**
