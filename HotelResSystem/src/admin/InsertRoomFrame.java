@@ -1,5 +1,7 @@
 package admin;
 
+import javax.swing.JOptionPane;
+
 import internal.Hotel;
 import internal.Room;
 import internal.Simple;
@@ -222,14 +224,68 @@ public class InsertRoomFrame extends javax.swing.JFrame {
         );
         pack();
     }                    
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {   
+    	hotel = new Hotel();
        if(simpleRadioButton.isSelected()){
-    	
-    	   
-    	   
+    	   simple= new Simple();
+    	   simple.setAir_con(airconCheckBox.isSelected());
+    	   simple.setMultimedia(multimediaCheckBox.isSelected());
+    	   simple.setNumber(Integer.parseInt(numberTextField.getText()));
+    	   simple.setOffer(Double.parseDouble(discountTextField.getText()));
+    	   simple.setPrice(Double.parseDouble(priceTextField.getText()));
+    	   simple.setRefrigerator(refrigeratorCheckBox.isSelected());
+    	   simple.setTv(tvCheckBox.isSelected());
+    	   simple.setWi_fi(wifiCheckBox.isSelected());
+    	   simple.setNumberOfBeds(jList1.getSelectedIndex()+1);
+    	   if(!hotel.hasRoom(simple)){
+    		   hotel.createSimpleRoom(simple);
+    		   JOptionPane.showMessageDialog(null, "The room is created");
+    		   airconCheckBox.setSelected(false);
+    		   multimediaCheckBox.setSelected(false);
+    		   numberTextField.setText("");
+    		   discountTextField.setText("");
+    		   priceTextField.setText("");
+    		   refrigeratorCheckBox.setSelected(false);
+    		   tvCheckBox.setSelected(false);
+    		   wifiCheckBox.setSelected(false);
+    		   jList1.setSelectedIndex(0);
+    	   }else{
+    		   JOptionPane.showMessageDialog(null,"The room already exists");
+    	   }  	   
        }else if(suiteRadioButton.isSelected()){
-    	   Suite room1 = new Suite();
-    	 
+    	   suite = new Suite();
+    	   suite.setAir_con(airconCheckBox.isSelected());
+    	   suite.setMultimedia(multimediaCheckBox.isSelected());
+    	   suite.setNumber(Integer.parseInt(numberTextField.getText()));
+    	   suite.setOffer(Double.parseDouble(discountTextField.getText()));
+    	   suite.setPrice(Double.parseDouble(priceTextField.getText()));
+    	   suite.setRefrigerator(refrigeratorCheckBox.isSelected());
+    	   suite.setTv(tvCheckBox.isSelected());
+    	   suite.setWi_fi(wifiCheckBox.isSelected());
+    	   suite.setNumberOfBeds(jList1.getSelectedIndex()+1);
+    	   suite.setJacuzzi(jacuzziCheckBox.isSelected());
+    	   suite.setMeal(mealCheckBox.isSelected());
+    	   suite.setBreakfast(breakfastCheckBox.isSelected());
+    	   suite.setDinner(dinnerCheckBox.isSelected());
+    	   if(!hotel.hasRoom(suite)){
+    		   hotel.createSuiteRoom(suite);
+    		   JOptionPane.showMessageDialog(null, "The room is created");
+    		   airconCheckBox.setSelected(false);
+    		   multimediaCheckBox.setSelected(false);
+    		   numberTextField.setText("");
+    		   discountTextField.setText("");
+    		   priceTextField.setText("");
+    		   refrigeratorCheckBox.setSelected(false);
+    		   tvCheckBox.setSelected(false);
+    		   wifiCheckBox.setSelected(false);
+    		   jList1.setSelectedIndex(0);
+    		   jacuzziCheckBox.setSelected(false);
+    		   mealCheckBox.setSelected(false);
+    		   breakfastCheckBox.setSelected(false);
+    		   dinnerCheckBox.setSelected(false);
+    	   }else{
+    		   JOptionPane.showMessageDialog(null,"The room already exists");
+    	   }  	 
     	   
        }
     }                                            
@@ -253,42 +309,7 @@ public class InsertRoomFrame extends javax.swing.JFrame {
           this.dispose();
     }                                            
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertRoomFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertRoomFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertRoomFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertRoomFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InsertRoomFrame().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify                     
+        // Variables declaration - do not modify                     
     private javax.swing.JCheckBox airconCheckBox;
     private javax.swing.JCheckBox breakfastCheckBox;
     private javax.swing.ButtonGroup buttonGroup1;

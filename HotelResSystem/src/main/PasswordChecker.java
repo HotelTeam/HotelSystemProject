@@ -31,6 +31,9 @@ public class PasswordChecker {
 				if (rs.first()) {
 					flag=true;
 				}
+				rs.close();
+				st.close();
+				con.close();
 			} catch (ClassNotFoundException e) {
 			 JOptionPane.showMessageDialog(null, "Check your SQL Driver");
 			} catch (SQLException e) {

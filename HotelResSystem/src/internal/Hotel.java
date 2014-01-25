@@ -12,7 +12,7 @@ import com.mysql.jdbc.Statement;
 public class Hotel {
 	private Vector<Room> rooms;
 	private Vector<Reservation> reservations;
-	private String driver ;
+	private String driver;
 	private final String url;
 	private final String username;
 	private final String password;
@@ -162,37 +162,65 @@ public class Hotel {
 		}
 	}
 
+	public boolean hasRoom(Room room){
+		boolean flag=false;
+		String selectRoom = "SELECT id_room FROM rooms WHERE number="+ room.getNumber() + "";	
+		try {
+			Class.forName(driver);
+			con = (Connection) DriverManager.getConnection(url, username,password);
+			st = (Statement) con.createStatement();
+			rs = st.executeQuery(selectRoom);
+			if (rs.first()) {
+				flag=true;
+			}
+			rs.close();
+			st.close();
+			con.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return flag;
+	}
+
 	public Vector<Reservation> getReservations() {
 		reservations = new Vector<Reservation>();
 		Reservation res;
 		Client cl;
 		Simple roomSimple;
-		String selectReservation="SELECT r.id_res, r.arrival_date, r.departure_date, c.id_client, " +
-				"c.username, c.password, c.age, c.creditcard, c.firstname, c.lastname, sr.price, ro.id_room," +
-				" ro.number, ro.price, ro.offer FROM reservation r, res_cl rc, client c, specific_res sr, rooms ro" +
-				"WHERE (rc.id_res = r.id_res)AND (rc.id_client = c.id_client)AND (ro.id_room = sr.id_room)AND " +
-				"(r.id_res = sr.id_res)";
+		String selectReservation = "SELECT r.id_res, r.arrival_date, r.departure_date, c.id_client, "
+				+ "c.username, c.password, c.age, c.creditcard, c.firstname, c.lastname, sr.price, ro.id_room,"
+				+ " ro.number, ro.price, ro.offer FROM reservation r, res_cl rc, client c, specific_res sr, rooms ro"
+				+ "WHERE (rc.id_res = r.id_res)AND (rc.id_client = c.id_client)AND (ro.id_room = sr.id_room)AND "
+				+ "(r.id_res = sr.id_res)";
 		try {
 			Class.forName(driver);
-			con = (Connection) DriverManager.getConnection(url, username,password);
-			st =(Statement) con.createStatement();
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+			st = (Statement) con.createStatement();
 			rs = st.executeQuery(selectReservation);
 			while (rs.next()) {
-				cl= new Client();
+				cl = new Client();
 				cl.setAge(rs.getInt("c.age"));
 				cl.setCreditCard(rs.getString("c.creditcard"));
 				cl.setFirstname(rs.getString("c.firstname"));
 				cl.setLastname(rs.getString("c.lastname"));
 				cl.setId_client(rs.getInt("c.id_client"));
 				cl.setUsername(rs.getString("c.username"));
-				cl.setPassword(rs.getString("c.password"));			
+				cl.setPassword(rs.getString("c.password"));
 				roomSimple = new Simple();
 				roomSimple.setId_room(rs.getInt("ro.id_room"));
 				roomSimple.setPrice(rs.getDouble("ro.price"));
 				roomSimple.setNumber(rs.getInt("ro.number"));
 				roomSimple.setOffer(rs.getDouble("ro.offer"));
-				res=new Reservation(roomSimple, cl, rs.getString("r.arrival_date"), rs.getString("r.departure_date"), rs.getDouble("sr.price"),rs.getInt("r.id_res"));
-				reservations.add(res);			
+				res = new Reservation(roomSimple, cl,
+						rs.getString("r.arrival_date"),
+						rs.getString("r.departure_date"),
+						rs.getDouble("sr.price"), rs.getInt("r.id_res"));
+				reservations.add(res);
 			}
 			rs.close();
 			st.close();
