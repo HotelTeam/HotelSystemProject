@@ -1,5 +1,10 @@
 package admin;
 
+import javax.swing.JOptionPane;
+
+import main.MainFrame;
+import main.PasswordChecker;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -108,11 +113,17 @@ public class AdminValidationFrame extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+    	new MainFrame().setVisible(true);
+    	this.dispose();
     }                                            
 
-    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
+    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) { 
+        if(PasswordChecker.checkPassword(usernameTextField.getText(),String.copyValueOf(passwordField.getPassword()))){
+        	new AdminBasicFrame().setVisible(true);        
+        	this.dispose();
+        }else{
+        	JOptionPane.showMessageDialog(null, "Username and password are not valid. Try again");
+        }
     }                                            
 
     /**

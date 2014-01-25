@@ -12,7 +12,7 @@ import com.mysql.jdbc.Statement;
 public class Hotel {
 	private Vector<Room> rooms;
 	private Vector<Reservation> reservations;
-	private String driver = "com.mysql.jdbc.Driver";
+	private String driver ;
 	private final String url;
 	private final String username;
 	private final String password;

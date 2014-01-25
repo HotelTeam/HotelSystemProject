@@ -1,3 +1,6 @@
+package main;
+import admin.AdminValidationFrame;
+
 
 /**
  *
@@ -88,7 +91,8 @@ public class MainFrame extends javax.swing.JFrame {
     }                                                   
 
     private void insertAdministratorButtonActionPerformed(java.awt.event.ActionEvent evt) {                                                          
-        // TODO add your handling code here:
+     new AdminValidationFrame().setVisible(true);
+     this.dispose();
     }                                                         
 
 

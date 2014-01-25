@@ -1,4 +1,7 @@
 package admin;
+
+import main.MainFrame;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -142,7 +145,8 @@ public class AdminBasicFrame extends javax.swing.JFrame {
     }                                              
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
+       new MainFrame().setVisible(true);
+       this.dispose();
     }                                          
 
     /**
