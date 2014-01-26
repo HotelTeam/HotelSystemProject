@@ -217,7 +217,7 @@ public class InsertDiscountFrame extends javax.swing.JFrame {
 								.addComponent(returnButton)));
 
 		pack();
-	}// </editor-fold>
+	}
 
 	private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {
 		if (!jList1.isSelectionEmpty()) {
@@ -274,5 +274,4 @@ public class InsertDiscountFrame extends javax.swing.JFrame {
 	private javax.swing.JButton returnButton;
 	private javax.swing.JButton selectButton;
 	private javax.swing.JButton submitButton;
-	// End of variables declaration
 }

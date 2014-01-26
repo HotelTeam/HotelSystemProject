@@ -488,8 +488,6 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 		new AdminBasicFrame().setVisible(true);
 		this.dispose();
 	}
-
-	// Variables declaration - do not modify
 	private javax.swing.JCheckBox airconCheckBox;
 	private javax.swing.JCheckBox breakfastCheckBox;
 	private javax.swing.ButtonGroup buttonGroup1;
@@ -515,5 +513,4 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 	private javax.swing.JRadioButton suiteRadioButton;
 	private javax.swing.JCheckBox tvCheckBox;
 	private javax.swing.JCheckBox wifiCheckBox;
-	// End of variables declaration
 }

@@ -1,6 +1,5 @@
 package admin;
 
-
 import javax.swing.JOptionPane;
 
 import internal.Hotel;
@@ -13,27 +12,30 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 	private Hotel hotel;
 	private Suite suiteRoom;
 	private Simple simpleRoom;
+	private boolean roomtypeSuite;
 
 	public ChangeSpecificRoomFrame(Room room) {
 		hotel = new Hotel();
 		initComponents();
 		numberTextField.setText(String.valueOf(room.getNumber()));
 		simpleRadioButton.setSelected(true);
-		if(hotel.isSuite(room)){
+		roomtypeSuite = hotel.isSuite(room);
+		if (roomtypeSuite) {
 			suiteRadioButton.setSelected(true);
 			jacuzziCheckBox.setVisible(true);
 			mealCheckBox.setVisible(true);
 			breakfastCheckBox.setVisible(true);
 			dinnerCheckBox.setVisible(true);
-			suiteRoom=new Suite();
+			suiteRoom = new Suite();
 			suiteRoom.setId_room(room.getId_room());
 			suiteRoom.setNumber(room.getNumber());
-		}else{
-			simpleRoom=new Simple();
+		} else {
+			simpleRoom = new Simple();
 			simpleRoom.setId_room(room.getId_room());
 			simpleRoom.setNumber(room.getNumber());
 		}
 	}
+
 	private void initComponents() {
 		buttonGroup1 = new javax.swing.ButtonGroup();
 		suiteRadioButton = new javax.swing.JRadioButton();
@@ -85,7 +87,7 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 		refrigeratorCheckBox.setText("Refrigerator");
 
 		jList1.setModel(new javax.swing.AbstractListModel<String>() {
-			
+
 			private static final long serialVersionUID = 1L;
 			String[] strings = { "1", "2", "3", "4", "5" };
 
@@ -475,18 +477,8 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 	}
 
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		boolean flag=false;
-		if(simpleRoom!=null){
-			simpleRoom.setPrice(Double.parseDouble(priceTextField.getText()));
-			simpleRoom.setOffer(Double.parseDouble(discountTextField.getText()));
-			simpleRoom.setAir_con(airconCheckBox.isSelected());
-			simpleRoom.setMultimedia(multimediaCheckBox.isSelected());
-			simpleRoom.setRefrigerator(refrigeratorCheckBox.isSelected());
-			simpleRoom.setTv(tvCheckBox.isSelected());
-			simpleRoom.setWi_fi(wifiCheckBox.isSelected());
-			simpleRoom.setNumberOfBeds(jList1.getSelectedIndex() + 1);
-			flag=hotel.updateSimpleRoom(simpleRoom);
-		}else if(suiteRoom!=null){
+		boolean flag = false;
+		if (roomtypeSuite) {
 			suiteRoom.setAir_con(airconCheckBox.isSelected());
 			suiteRoom.setMultimedia(multimediaCheckBox.isSelected());
 			suiteRoom.setOffer(Double.parseDouble(discountTextField.getText()));
@@ -499,14 +491,27 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 			suiteRoom.setMeal(mealCheckBox.isSelected());
 			suiteRoom.setBreakfast(breakfastCheckBox.isSelected());
 			suiteRoom.setDinner(dinnerCheckBox.isSelected());
-			flag=hotel.updateSuiteRoom(suiteRoom);
+			flag = hotel.updateSuiteRoom(suiteRoom);
+
+		} else {
+			simpleRoom.setPrice(Double.parseDouble(priceTextField.getText()));
+			simpleRoom
+					.setOffer(Double.parseDouble(discountTextField.getText()));
+			simpleRoom.setAir_con(airconCheckBox.isSelected());
+			simpleRoom.setMultimedia(multimediaCheckBox.isSelected());
+			simpleRoom.setRefrigerator(refrigeratorCheckBox.isSelected());
+			simpleRoom.setTv(tvCheckBox.isSelected());
+			simpleRoom.setWi_fi(wifiCheckBox.isSelected());
+			simpleRoom.setNumberOfBeds(jList1.getSelectedIndex() + 1);
+			flag = hotel.updateSimpleRoom(simpleRoom);
 		}
-		if(flag){
+		if (flag) {
 			JOptionPane.showMessageDialog(null, "The room is changed.");
 			new ChangeRoomFrame().setVisible(true);
 			this.dispose();
-		}else{
-			JOptionPane.showMessageDialog(null, "The room has not been changed due to asystem error.");
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"The room has not been changed due to asystem error.");
 		}
 	}
 
@@ -516,6 +521,7 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 		mealCheckBox.setVisible(false);
 		dinnerCheckBox.setVisible(false);
 	}
+
 	private javax.swing.JCheckBox airconCheckBox;
 	private javax.swing.JCheckBox breakfastCheckBox;
 	private javax.swing.ButtonGroup buttonGroup1;
@@ -541,5 +547,5 @@ public class ChangeSpecificRoomFrame extends javax.swing.JFrame {
 	private javax.swing.JRadioButton suiteRadioButton;
 	private javax.swing.JCheckBox tvCheckBox;
 	private javax.swing.JCheckBox wifiCheckBox;
-	
+
 }

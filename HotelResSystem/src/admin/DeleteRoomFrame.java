@@ -158,12 +158,10 @@ public class DeleteRoomFrame extends javax.swing.JFrame {
 		this.dispose();
 	}
 
-	// Variables declaration - do not modify
 	private javax.swing.JButton deleteButton;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JList<String> jList1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JButton returnButton;
-	// End of variables declaration
 }

@@ -43,8 +43,10 @@ public class Hotel {
 			pst.setInt(3, room.getId_room());
 			pst.setDouble(2, room.getOffer());
 			pst.setDouble(1, room.getPrice());
-			flag = pst.execute();
+			int val = pst.executeUpdate();
+			if(val!=Statement.EXECUTE_FAILED)flag=true;
 			if (flag) {
+				flag=false;
 				PreparedStatement pst1 = (PreparedStatement) con
 						.prepareStatement(update2);
 				pst1.setInt(7, room.getId_room());
@@ -54,9 +56,11 @@ public class Hotel {
 				pst1.setBoolean(4, room.getWi_fi());
 				pst1.setBoolean(5, room.getTv());
 				pst1.setBoolean(6, room.getRefrigerator());
-				flag = pst1.execute();
+				val = pst1.executeUpdate();
+				if(val!=Statement.EXECUTE_FAILED)flag=true;
 				pst1.close();
 				if (flag) {
+					flag=false;
 					PreparedStatement pst2 = (PreparedStatement) con
 							.prepareStatement(update3);
 					pst2.setBoolean(1, room.getJacuzzi());
@@ -64,7 +68,8 @@ public class Hotel {
 					pst2.setBoolean(3, room.getMeal());
 					pst2.setBoolean(4, room.getDinner());
 					pst2.setInt(5, room.getId_room());	
-					flag = pst2.execute();
+					val = pst2.executeUpdate();
+					if(val!=Statement.EXECUTE_FAILED)flag=true;
 					pst2.close();
 				}
 			}
@@ -95,8 +100,10 @@ public class Hotel {
 			pst.setInt(3, room.getId_room());
 			pst.setDouble(2, room.getOffer());
 			pst.setDouble(1, room.getPrice());
-			flag = pst.execute();
+			int val = pst.executeUpdate();
+			if(val!=Statement.EXECUTE_FAILED)flag=true;
 			if (flag) {
+				flag=false;
 				PreparedStatement pst1 = (PreparedStatement) con
 						.prepareStatement(update2);
 				pst1.setInt(7, room.getId_room());
@@ -106,7 +113,8 @@ public class Hotel {
 				pst1.setBoolean(4, room.getWi_fi());
 				pst1.setBoolean(5, room.getTv());
 				pst1.setBoolean(6, room.getRefrigerator());
-				flag = pst1.execute();
+				val = pst1.executeUpdate();
+				if(val!=Statement.EXECUTE_FAILED)flag=true;
 				pst1.close();
 			}
 			if (flag) {

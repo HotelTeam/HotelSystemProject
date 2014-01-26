@@ -3,11 +3,8 @@ package main;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
-
 import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 public class PasswordChecker {
@@ -37,7 +34,6 @@ public class PasswordChecker {
 			} catch (ClassNotFoundException e) {
 			 JOptionPane.showMessageDialog(null, "Check your SQL Driver");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				JOptionPane.showMessageDialog(null, "Check your sql validation(username, password)");
 			}
 		return flag;

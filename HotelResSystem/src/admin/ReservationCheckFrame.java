@@ -108,11 +108,9 @@ public class ReservationCheckFrame extends javax.swing.JFrame {
 		new AdminBasicFrame().setVisible(true);
 		this.dispose();
 	}
-
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JList<String> jList1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JButton returnButton;
-	// End of variables declaration
 }

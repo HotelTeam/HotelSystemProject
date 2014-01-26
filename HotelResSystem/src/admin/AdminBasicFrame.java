@@ -4,9 +4,8 @@ import main.MainFrame;
 
 
 public class AdminBasicFrame extends javax.swing.JFrame {
-
-    
-    public AdminBasicFrame() {
+	private static final long serialVersionUID = 1L;
+	public AdminBasicFrame() {
         initComponents();
     }                   
     private void initComponents() {
