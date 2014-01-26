@@ -8,6 +8,7 @@ import internal.Hotel;
 import internal.Reservation;
 
 public class ReservationCheckFrame extends javax.swing.JFrame {
+	private static final long serialVersionUID = 1L;
 	private Hotel hotel;
 	private Vector<Reservation> res;
 
@@ -15,14 +16,12 @@ public class ReservationCheckFrame extends javax.swing.JFrame {
 		hotel = new Hotel();
 		initComponents();
 	}
-
-	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
 		jScrollPane2 = new javax.swing.JScrollPane();
-		jList1 = new javax.swing.JList();
+		jList1 = new javax.swing.JList<String>();
 		returnButton = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -112,7 +111,7 @@ public class ReservationCheckFrame extends javax.swing.JFrame {
 
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
-	private javax.swing.JList jList1;
+	private javax.swing.JList<String> jList1;
 	private javax.swing.JScrollPane jScrollPane2;
 	private javax.swing.JButton returnButton;
 	// End of variables declaration

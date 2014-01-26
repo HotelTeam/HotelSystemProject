@@ -7,6 +7,8 @@ import internal.Hotel;
 import internal.Room;
 
 public class DeleteRoomFrame extends javax.swing.JFrame {
+	
+	private static final long serialVersionUID = 1L;
 	private Hotel hotel;
 	private Vector<Room> rooms;
 	public DeleteRoomFrame() {
