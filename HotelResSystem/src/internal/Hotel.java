@@ -191,11 +191,11 @@ public class Hotel {
 		Reservation res;
 		Client cl;
 		Simple roomSimple;
-		String selectReservation = "SELECT r.id_res, r.arrival_date, r.departure_date, c.id_client, "
-				+ "c.username, c.password, c.age, c.creditcard, c.firstname, c.lastname, sr.price, ro.id_room,"
-				+ " ro.number, ro.price, ro.offer FROM reservation r, res_cl rc, client c, specific_res sr, rooms ro"
-				+ "WHERE (rc.id_res = r.id_res)AND (rc.id_client = c.id_client)AND (ro.id_room = sr.id_room)AND "
-				+ "(r.id_res = sr.id_res)";
+		String selectReservation = "SELECT r.id_res, r.arrival_date, r.departure_date, c.id_client, " +
+				"c.username, c.password, c.age, c.creditcard, c.firstname," +
+				" c.lastname, sr.price, ro.id_room, ro.number, ro.price, ro.offer " +
+				"FROM reservation r, res_cl rc, client c, specific_res sr, rooms ro "+
+				"WHERE(rc.id_res = r.id_res)AND(rc.id_client = c.id_client)AND(ro.id_room = sr.id_room)AND(r.id_res = sr.id_res)";
 		try {
 			Class.forName(driver);
 			con = (Connection) DriverManager.getConnection(url, username,
