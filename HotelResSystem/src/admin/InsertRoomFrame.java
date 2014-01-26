@@ -3,11 +3,12 @@ package admin;
 import javax.swing.JOptionPane;
 
 import internal.Hotel;
-import internal.Room;
 import internal.Simple;
 import internal.Suite;
 
 public class InsertRoomFrame extends javax.swing.JFrame {
+	
+	private static final long serialVersionUID = 1L;
 	private Suite suite;
 	private Simple simple;
 	private Hotel hotel;
@@ -15,8 +16,6 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 	public InsertRoomFrame() {
 		initComponents();
 	}
-
-	@SuppressWarnings("unchecked")
 	private void initComponents() {
 
 		buttonGroup1 = new javax.swing.ButtonGroup();
@@ -31,7 +30,7 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 		tvCheckBox = new javax.swing.JCheckBox();
 		refrigeratorCheckBox = new javax.swing.JCheckBox();
 		jScrollPane1 = new javax.swing.JScrollPane();
-		jList1 = new javax.swing.JList();
+		jList1 = new javax.swing.JList<String>();
 		jLabel2 = new javax.swing.JLabel();
 		airconCheckBox = new javax.swing.JCheckBox();
 		jLabel3 = new javax.swing.JLabel();
@@ -82,14 +81,15 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 		wifiCheckBox.setText("Wi-Fi");
 		tvCheckBox.setText("TV");
 		refrigeratorCheckBox.setText("Refrigerator");
-		jList1.setModel(new javax.swing.AbstractListModel() {
+		jList1.setModel(new javax.swing.AbstractListModel<String>() {
+			private static final long serialVersionUID = 1L;
 			String[] strings = { "1", "2", "3", "4", "5" };
 
 			public int getSize() {
 				return strings.length;
 			}
 
-			public Object getElementAt(int i) {
+			public String getElementAt(int i) {
 				return strings[i];
 			}
 		});
@@ -99,6 +99,9 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 		jLabel3.setText("Number");
 		jLabel4.setText("Price");
 		jLabel5.setText("Discount");
+		priceTextField.setText("0");
+		discountTextField.setText("0");
+		numberTextField.setText("0");
 		javax.swing.GroupLayout simplePanelLayout = new javax.swing.GroupLayout(
 				simplePanel);
 		simplePanel.setLayout(simplePanelLayout);
@@ -497,7 +500,7 @@ public class InsertRoomFrame extends javax.swing.JFrame {
 	private javax.swing.JLabel jLabel3;
 	private javax.swing.JLabel jLabel4;
 	private javax.swing.JLabel jLabel5;
-	private javax.swing.JList jList1;
+	private javax.swing.JList<String> jList1;
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JCheckBox jacuzziCheckBox;
 	private javax.swing.JCheckBox mealCheckBox;
