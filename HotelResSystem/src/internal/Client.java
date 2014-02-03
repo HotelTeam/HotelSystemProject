@@ -1,6 +1,7 @@
 package internal;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -20,16 +21,8 @@ public class Client {
 	private Connection con;
 	private boolean clientAddedDB;
 
-	public Client(){
+	public Client() {
 		clientAddedDB = false;
-	}
-
-	public int getId_client() {
-		return id_client;
-	}
-
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
 	}
 
 	public String getUsername() {
@@ -88,43 +81,73 @@ public class Client {
 	public void setCreditCard(String creditCard) {
 		this.creditCard = creditCard;
 	}
-	
-	public void addClientToDB(){
 
+	public void setId_client(int val) {
+		this.id_client = val;
+	}
+
+	public int getIdClient() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
+
 			String url = "jdbc:mysql://localhost/hotel_db";
 			String username = "root";
 			String password = "";
-			con = (Connection) DriverManager.getConnection(url, username, password);
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+
 			Statement st = (Statement) con.createStatement();
 
-			preparedStatement = (PreparedStatement) con.prepareStatement("insert into client (id_client, username, password, age, mail, creditcard, firstname, lastname) values (default, ?,?,?,?,?,?,?)");
-			
+			String query = "SELECT id_client FROM client";
+			ResultSet rs = st.executeQuery(query);
+
+			this.id_client = rs.getInt("id_client");
+			return id_client;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return 0;
+		}
+	}
+
+	public void addClientToDB() {
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			String url = "jdbc:mysql://localhost/hotel_db";
+			String username = "root";
+			String password = "";
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+			Statement st = (Statement) con.createStatement();
+
+			preparedStatement = (PreparedStatement) con
+					.prepareStatement("insert into client (id_client, username, password, age, mail, creditcard, firstname, lastname) values (default, ?,?,?,?,?,?,?)");
+
 			preparedStatement.setString(1, this.getUsername());
-		    preparedStatement.setString(2, this.getPassword());
-		    preparedStatement.setInt(3, this.getAge());
-		    preparedStatement.setString(4, this.getEmail());
-		    preparedStatement.setString(5, this.getCreditCard());
-		    preparedStatement.setString(6, this.getFirstname());
-		    preparedStatement.setString(7, this.getLastname());
-			
-		    preparedStatement.executeUpdate();
-			
-		    preparedStatement.close();
+			preparedStatement.setString(2, this.getPassword());
+			preparedStatement.setInt(3, this.getAge());
+			preparedStatement.setString(4, this.getEmail());
+			preparedStatement.setString(5, this.getCreditCard());
+			preparedStatement.setString(6, this.getFirstname());
+			preparedStatement.setString(7, this.getLastname());
+
+			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
 			st.close();
 			con.close();
-			
+
 			clientAddedDB = true;
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
 			System.out.println(e);
 			clientAddedDB = false;
 		}
 	}
-	
-	public boolean getClientAddedDB(){
+
+	public boolean getClientAddedDB() {
 		return clientAddedDB;
 	}
 

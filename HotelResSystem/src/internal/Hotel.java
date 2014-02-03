@@ -2,8 +2,10 @@ package internal;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.ArrayList;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
@@ -19,14 +21,30 @@ public class Hotel {
 	private ResultSet rs;
 	private Statement st;
 	private PreparedStatement pst;
+	private ArrayList<Room> roomsA;
+	private ArrayList<Room> simple_rooms;
+	private ArrayList<Room> suite_rooms;
+	private ArrayList<Reservation> reservationsarray;
 
 	public Hotel() {
 		driver = "com.mysql.jdbc.Driver";
 		url = "jdbc:mysql://localhost/hotel_db";
 		username = "root";
 		password = "zaq123!@#";
-
+		this.rooms = new Vector<Room>();
+		roomsA= new ArrayList<Room>();
+		this.simple_rooms = new ArrayList<Room>();
+		this.suite_rooms = new ArrayList<Room>();
+		this.getRoomsFromDB();
 	}
+
+	
+	public ArrayList<Reservation> getReservationsA() {
+		return reservationsarray;
+	}
+	
+
+
 
 	public boolean updateSuiteRoom(Suite room) {
 		boolean flag = false;
@@ -36,55 +54,124 @@ public class Hotel {
 		String update3 = "UPDATE suiteRoom SET jacuzzi = ? , breakfast= ? ,meal = ?,dinner =? WHERE id_room =?";
 		try {
 			Class.forName(driver);
-			con = (Connection) DriverManager.getConnection(url, username,
-					password);
-			con.setAutoCommit(false);
-			pst = (PreparedStatement) con.prepareStatement(update1);
-			pst.setInt(3, room.getId_room());
-			pst.setDouble(2, room.getOffer());
-			pst.setDouble(1, room.getPrice());
-			int val = pst.executeUpdate();
-			if(val!=Statement.EXECUTE_FAILED)flag=true;
-			if (flag) {
-				flag=false;
-				PreparedStatement pst1 = (PreparedStatement) con
-						.prepareStatement(update2);
-				pst1.setInt(7, room.getId_room());
-				pst1.setInt(1,room.getNumberOfBeds());
-				pst1.setBoolean(2, room.getAir_con());
-				pst1.setBoolean(3, room.getMultimedia());
-				pst1.setBoolean(4, room.getWi_fi());
-				pst1.setBoolean(5, room.getTv());
-				pst1.setBoolean(6, room.getRefrigerator());
-				val = pst1.executeUpdate();
-				if(val!=Statement.EXECUTE_FAILED)flag=true;
-				pst1.close();
-				if (flag) {
-					flag=false;
-					PreparedStatement pst2 = (PreparedStatement) con
-							.prepareStatement(update3);
-					pst2.setBoolean(1, room.getJacuzzi());
-					pst2.setBoolean(2, room.getBreakfast());
-					pst2.setBoolean(3, room.getMeal());
-					pst2.setBoolean(4, room.getDinner());
-					pst2.setInt(5, room.getId_room());	
-					val = pst2.executeUpdate();
-					if(val!=Statement.EXECUTE_FAILED)flag=true;
-					pst2.close();
-				}
-			}
-			if (flag) {
-				con.commit();
-			} else {
-				con.rollback();
-			}
-			pst.close();
-			con.close();
-		} catch (ClassNotFoundException | SQLException e) {
+						con = (Connection) DriverManager.getConnection(url, username,
+								password);
+						con.setAutoCommit(false);
+						pst = (PreparedStatement) con.prepareStatement(update1);
+						pst.setInt(3, room.getId_room());
+						pst.setDouble(2, room.getOffer());
+						pst.setDouble(1, room.getPrice());
+						int val = pst.executeUpdate();
+						if(val!=Statement.EXECUTE_FAILED)flag=true;
+						if (flag) {
+							flag=false;
+							PreparedStatement pst1 = (PreparedStatement) con
+									.prepareStatement(update2);
+							pst1.setInt(7, room.getId_room());
+							pst1.setInt(1,room.getNumberOfBeds());
+							pst1.setBoolean(2, room.getAir_con());
+							pst1.setBoolean(3, room.getMultimedia());
+							pst1.setBoolean(4, room.getWi_fi());
+							pst1.setBoolean(5, room.getTv());
+							pst1.setBoolean(6, room.getRefrigerator());
+							val = pst1.executeUpdate();
+							if(val!=Statement.EXECUTE_FAILED)flag=true;
+							pst1.close();
+							if (flag) {
+								flag=false;
+								PreparedStatement pst2 = (PreparedStatement) con
+										.prepareStatement(update3);
+								pst2.setBoolean(1, room.getJacuzzi());
+								pst2.setBoolean(2, room.getBreakfast());
+								pst2.setBoolean(3, room.getMeal());
+								pst2.setBoolean(4, room.getDinner());
+								pst2.setInt(5, room.getId_room());	
+								val = pst2.executeUpdate();
+								if(val!=Statement.EXECUTE_FAILED)flag=true;
+								pst2.close();
+							}
+						}
+						if (flag) {
+							con.commit();
+						} else {
+							con.rollback();
+						}
+						pst.close();
+						con.close();
+					} catch (ClassNotFoundException | SQLException e) {
+						e.printStackTrace();
+					}
+		return flag;
+
+	}
+	public ArrayList<Room> getSimpleRooms() {
+		return simple_rooms;
+	}
+	
+	public ArrayList<Room> getSuiteRooms() {
+		return suite_rooms;
+	}
+	
+	public void getRoomsFromDB(){
+		String query = "SELECT r.id_room, r.number, r.price, r.offer, s.id_room, s.id_bed, s.air_con, s.multimedia, s.wi_fi, s.tv, s.refrigerator, t.id_room, t.jacuzzi, t.breakfast, t.meal, t.dinner, b.number FROM rooms r LEFT JOIN simpleroom s ON r.id_room = s.id_room LEFT JOIN suiteroom t ON r.id_room = t.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
+		try{	
+		Class.forName("com.mysql.jdbc.Driver");
+			
+			String url = "jdbc:mysql://localhost/hotel_db";
+			String username = "root";
+			String password = "";
+			con = (Connection) DriverManager.getConnection(url, username, password);
+			st = (Statement) con.createStatement();
+			
+			ResultSet rs = st.executeQuery(query);
+			 while (rs.next()) {
+				 if(rs.getInt("t.id_room") != 0){
+					 Suite room = new Suite();
+					 
+					 room.setJacuzzi(rs.getBoolean("jacuzzi"));
+					 room.setMeal(rs.getBoolean("meal"));
+					 room.setBreakfast(rs.getBoolean("breakfast"));
+					 room.setDinner(rs.getBoolean("dinner"));
+					 room.setNumber(rs.getInt("number"));
+					 room.setNumberOfBeds(rs.getInt("id_bed"));
+					 room.setAir_con(rs.getBoolean("air_con"));
+					 room.setMultimedia(rs.getBoolean("multimedia"));
+					 room.setWi_fi(rs.getBoolean("wi_fi"));
+					 room.setTv(rs.getBoolean("tv"));
+					 room.setRefrigerator(rs.getBoolean("refrigerator"));
+					 room.setOffer(rs.getDouble("offer"));
+					 room.setPrice(rs.getInt("price"));
+					 room.setNumber(rs.getInt("number"));
+					 room.setId_room(rs.getInt("id_room"));
+					 room.setNumberBeds(rs.getInt("b.number"));
+					 
+					 roomsA.add(room);
+					 suite_rooms.add(room);
+					 
+				 }else{
+					 Simple room = new Simple();
+					 
+					 room.setNumber(rs.getInt("number"));
+					 room.setNumberOfBeds(rs.getInt("id_bed"));
+					 room.setAir_con(rs.getBoolean("air_con"));
+					 room.setMultimedia(rs.getBoolean("multimedia"));
+					 room.setWi_fi(rs.getBoolean("wi_fi"));
+					 room.setTv(rs.getBoolean("tv"));
+					 room.setRefrigerator(rs.getBoolean("refrigerator"));
+					 room.setOffer(rs.getDouble("offer"));
+					 room.setPrice(rs.getInt("price"));
+					 room.setNumber(rs.getInt("number"));
+					 room.setId_room(rs.getInt("id_room"));
+					 room.setNumberBeds(rs.getInt("b.number"));
+
+					 roomsA.add(room);
+					 simple_rooms.add(room);
+				 }
+			 } 
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return flag;
-	}
+			}
 
 	public boolean updateSimpleRoom(Simple room) {
 		boolean flag = false;
