@@ -1,6 +1,7 @@
 package internal;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
@@ -19,17 +20,17 @@ public class Client {
 	private PreparedStatement preparedStatement = null;
 	private Connection con;
 	private boolean clientAddedDB;
+	private String driver;
+	private String url;
+	private String usernamedb;
+	private String passworddb;
 
-	public Client(){
+	public Client() {
+		driver = "com.mysql.jdbc.Driver";
+		url = "jdbc:mysql://localhost/hotel_db";
+		usernamedb = "root";
+		passworddb = "zaq123!@#";
 		clientAddedDB = false;
-	}
-
-	public int getId_client() {
-		return id_client;
-	}
-
-	public void setId_client(int id_client) {
-		this.id_client = id_client;
 	}
 
 	public String getUsername() {
@@ -88,43 +89,114 @@ public class Client {
 	public void setCreditCard(String creditCard) {
 		this.creditCard = creditCard;
 	}
-	
-	public void addClientToDB(){
+
+	public void setId_client(int val) {
+		this.id_client = val;
+	}
+
+	public int getId_client() {
+		return this.getIdClient();
+	}
+
+	public int getIdClient() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			String url = "jdbc:mysql://localhost/hotel_db";
+			String username = "root";
+			String password = "zaq123!@#";
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
+
+			Statement st = (Statement) con.createStatement();
+
+			String query = "SELECT id_client FROM client";
+			ResultSet rs = st.executeQuery(query);
+			if(rs.next()){
+			this.id_client = rs.getInt("id_client");
+			}
+			return id_client;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+			return 0;
+		}
+	}
+
+	public void addClientToDB() {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			
+
 			String url = "jdbc:mysql://localhost/hotel_db";
 			String username = "root";
-			String password = "";
-			con = (Connection) DriverManager.getConnection(url, username, password);
+			String password = "zaq123!@#";
+			con = (Connection) DriverManager.getConnection(url, username,
+					password);
 			Statement st = (Statement) con.createStatement();
 
-			preparedStatement = (PreparedStatement) con.prepareStatement("insert into client (id_client, username, password, age, mail, creditcard, firstname, lastname) values (default, ?,?,?,?,?,?,?)");
-			
+			preparedStatement = (PreparedStatement) con
+					.prepareStatement("insert into client (username, password, age, mail, creditcard, firstname, lastname) values (?,?,?,?,?,?,?)");
+
 			preparedStatement.setString(1, this.getUsername());
-		    preparedStatement.setString(2, this.getPassword());
-		    preparedStatement.setInt(3, this.getAge());
-		    preparedStatement.setString(4, this.getEmail());
-		    preparedStatement.setString(5, this.getCreditCard());
-		    preparedStatement.setString(6, this.getFirstname());
-		    preparedStatement.setString(7, this.getLastname());
-			
-		    preparedStatement.executeUpdate();
-			
-		    preparedStatement.close();
+			preparedStatement.setString(2, this.getPassword());
+			preparedStatement.setInt(3, this.getAge());
+			preparedStatement.setString(4, this.getEmail());
+			preparedStatement.setString(5, this.getCreditCard());
+			preparedStatement.setString(6, this.getFirstname());
+			preparedStatement.setString(7, this.getLastname());
+
+			preparedStatement.executeUpdate();
+
+			preparedStatement.close();
 			st.close();
 			con.close();
-			
+
 			clientAddedDB = true;
-			
-		} catch(Exception e) {
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 			clientAddedDB = false;
 		}
 	}
-	
-	public boolean getClientAddedDB(){
+
+	public void getClientFromDB(String a_username, String a_password) {
+		Statement st;
+		ResultSet rs;
+		try {
+			Class.forName(driver);
+
+			String getClient = "SELECT id_client, username, password, age, mail, creditcard, firstname, lastname FROM client WHERE username= \""
+					+ a_username + "\" AND password= \"" + a_password + "\"";
+
+			con = (Connection) DriverManager.getConnection(url, usernamedb,
+					passworddb);
+			st = (Statement) con.createStatement();
+			rs = st.executeQuery(getClient);
+
+			while (rs.next()) {
+				this.setId_client(rs.getInt("id_client"));
+				this.setUsername(rs.getString("username"));
+				this.setPassword(rs.getString("password"));
+				this.setAge(rs.getInt("age"));
+				this.setEmail(rs.getString("mail"));
+				this.setCreditCard(rs.getString("creditcard"));
+				this.setFirstname(rs.getString("firstname"));
+				this.setLastname(rs.getString("lastname"));
+			}
+			rs.close();
+			st.close();
+			con.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+		}
+	}
+
+	public boolean getClientAddedDB() {
 		return clientAddedDB;
 	}
 

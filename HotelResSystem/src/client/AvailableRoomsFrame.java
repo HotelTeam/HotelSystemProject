@@ -1,13 +1,14 @@
 package client;
 
 
+import internal.Hotel;
+
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,10 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.Statement;
 
 public class AvailableRoomsFrame extends JFrame implements ActionListener{
 
@@ -32,10 +29,10 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 	private JLabel titleText,arrivalText,departureText;
 	private JTextField arrivalField, departureField;
 	private JButton pickDateButton,selectRoomButton,backButton;
-	private List roomsList;
-	
-	private PreparedStatement preparedStatement = null;
-	private Connection con;
+	private List simpleRoomsList;
+	private List suiteRoomsList;
+	private Hotel hotel;
+	private String selection;
 	
 	public AvailableRoomsFrame(){
 				
@@ -56,12 +53,14 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 		pickDateButton = new JButton("Show Rooms");
 		selectRoomButton = new JButton("Select");
 		backButton = new JButton("Back");
-		roomsList = new List();
+		simpleRoomsList = new List();
+		suiteRoomsList = new List();
 
 		selectRoomButton.setEnabled(false);
 		selectRoomButton.addActionListener(this);
 		backButton.addActionListener(this);
-		roomsList.addActionListener(this);
+		simpleRoomsList.addActionListener(this);
+		suiteRoomsList.addActionListener(this);
 		
 		northPanel.setLayout(new GridLayout(2,5));
 		northPanel.add(new JLabel());
@@ -75,11 +74,14 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 		northPanel.add(departureField);
 		northPanel.add(pickDateButton);
 
+		hotel = new Hotel();
+		
 		addRoomsToList();
 		
-		centerPanel.setLayout(new BorderLayout());
-		centerPanel.add(roomsList,BorderLayout.CENTER);
-		
+		centerPanel.setLayout(new FlowLayout());
+		centerPanel.add(simpleRoomsList);
+		centerPanel.add(suiteRoomsList);
+
 		southPanel.setLayout(new GridLayout(1,5));
 		southPanel.add(new JLabel());
 		southPanel.add(new JLabel());
@@ -101,38 +103,36 @@ public class AvailableRoomsFrame extends JFrame implements ActionListener{
 	}
 	
 	private void addRoomsToList(){
-		String query = "SELECT r.id_room, b.number, r.price, r.offer FROM rooms r LEFT JOIN simpleroom s ON r.id_room = s.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
+
 		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			
-			String url = "jdbc:mysql://localhost/hotel_db";
-			String username = "root";
-			String password = "";
-			con = (Connection) DriverManager.getConnection(url, username, password);
-			Statement st = (Statement) con.createStatement();
-			
-			ResultSet rs = st.executeQuery(query);
-			
-			 while (rs.next()) {
-				 
-				 roomsList.add("Room" + rs.getString("id_room") + "    number of beds:" + rs.getInt("number") + "    price:" + rs.getInt("price") + "    offer:" + rs.getDouble("offer"));
-				 
-			 }
-			
-		} catch(Exception e) {
-			roomsList.add("Error conecting to database");
-			System.out.println(e);
+		for(int i = 0; i < hotel.getSuiteRooms().size(); i++) {   
+			suiteRoomsList.add("Suite: " + hotel.getSuiteRooms().get(i).getId_room() + "  |  number of beds: " + hotel.getSuiteRooms().get(i).getNumberBeds() + "  |  price: " + hotel.getSuiteRooms().get(i).getPrice() + "  |  offer: " + hotel.getSuiteRooms().get(i).getOffer());
+		
+		}  
+		
+		for(int i = 0; i < hotel.getSimpleRooms().size(); i++) {   
+			simpleRoomsList.add("Simple: " + hotel.getSimpleRooms().get(i).getId_room() + "  |  number of beds: " + hotel.getSimpleRooms().get(i).getNumberBeds() + "  |  price: " + hotel.getSimpleRooms().get(i).getPrice() + "  |  offer: " + hotel.getSimpleRooms().get(i).getOffer());
 		}
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == roomsList) {
+		if(e.getSource() == simpleRoomsList) {
 			selectRoomButton.setEnabled(true);
+			selection = "simple";
+			suiteRoomsList.deselect(suiteRoomsList.getSelectedIndex());
+		}else if (e.getSource() == suiteRoomsList){
+			selectRoomButton.setEnabled(true);
+			selection = "suite";
+			simpleRoomsList.deselect(simpleRoomsList.getSelectedIndex());
 		}else if (e.getSource() == selectRoomButton){
-			RoomFrame rf = new RoomFrame();
+			if(selection == "suite"){
+				RoomFrame rf = new RoomFrame(hotel.getSuiteRooms().get(suiteRoomsList.getSelectedIndex()));
+			}else if(selection == "simple"){
+				RoomFrame rf = new RoomFrame(hotel.getSimpleRooms().get(simpleRoomsList.getSelectedIndex()));
+			}
 		}else if (e.getSource() == backButton){
 			this.dispose();
 		}

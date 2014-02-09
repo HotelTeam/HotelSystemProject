@@ -1,11 +1,13 @@
 package client;
 import internal.Client;
+import internal.Reservation;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -131,6 +133,20 @@ public class ValidationFormFrame extends JFrame implements ActionListener{
 				client.setCreditCard(creditCardField.getText());
 				
 				client.addClientToDB();
+				
+				
+				
+				
+				
+				
+				Reservation reservation = new Reservation();
+				reservation.setClient(client);
+				reservation.setDay(2);
+				reservation.setMonth(12);
+				reservation.setYear(2014);
+
+				reservation.addReservationToDB();
+				
 				
 				if(client.getClientAddedDB()){
 					JOptionPane.showMessageDialog(null, "Mr/Ms " + client.getFirstname() + " " + client.getLastname() + " your room has successfully been reserved.", "Success",JOptionPane.INFORMATION_MESSAGE);
