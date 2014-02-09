@@ -113,13 +113,13 @@ public class Hotel {
 	}
 	
 	public void getRoomsFromDB(){
-		String query = "SELECT r.id_room, r.number, r.price, r.offer, s.id_room, s.id_bed, s.air_con, s.multimedia, s.wi_fi, s.tv, s.refrigerator, t.id_room, t.jacuzzi, t.breakfast, t.meal, t.dinner, b.number FROM rooms r LEFT JOIN simpleroom s ON r.id_room = s.id_room LEFT JOIN suiteroom t ON r.id_room = t.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
+		String query = "SELECT r.id_room, r.number, r.price, r.offer, s.id_room, s.id_bed, s.air_con, s.multimedia, s.wi_fi, s.tv, s.refrigerator, t.id_room, t.jacuzzi, t.breakfast, t.meal, t.dinner, b.number FROM rooms r LEFT JOIN simpleRoom s ON r.id_room = s.id_room LEFT JOIN suiteRoom t ON r.id_room = t.id_room LEFT JOIN bed_type b ON b.id_bed = s.id_bed";
 		try{	
 		Class.forName("com.mysql.jdbc.Driver");
 			
 			String url = "jdbc:mysql://localhost/hotel_db";
 			String username = "root";
-			String password = "";
+			String password = "zaq123!@#";
 			con = (Connection) DriverManager.getConnection(url, username, password);
 			st = (Statement) con.createStatement();
 			

@@ -1,4 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/client/AnnualAnalysisFrame.java=UTF-8
-encoding//src/client/ChooseAnalysisPanel.java=UTF-8
-encoding//src/client/MonthlyAnalysisFrame.java=UTF-8
+encoding//src/manager/AnnualAnalysisFrame.java=UTF-8
+encoding//src/manager/MonthlyAnalysisFrame.java=UTF-8

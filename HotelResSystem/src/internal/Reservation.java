@@ -102,7 +102,7 @@ public class Reservation {
 			
 			String url = "jdbc:mysql://localhost/hotel_db";
 			String username = "root";
-			String password = "";
+			String password = "zaq123!@#";
 			con = (Connection) DriverManager.getConnection(url, username, password);
 			
 			Statement st = (Statement) con.createStatement();
